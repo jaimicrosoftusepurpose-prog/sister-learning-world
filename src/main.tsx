@@ -3,18 +3,37 @@ import { RequireAuth } from "@/components/RequireAuth";
 import { VlyToolbar } from "../vly-toolbar-readonly.tsx";
 import { ConvexAuthProvider } from "@convex-dev/auth/react";
 import { ConvexReactClient } from "convex/react";
+import { GameProvider } from "@/contexts/GameContext";
 import React, { StrictMode, useEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router";
+import { BrowserRouter, Route, Routes, useLocation, useParams } from "react-router";
 import "./index.css";
+
+function GamePlaceholderRoute() {
+  const { gameId } = useParams();
+  const Placeholder = lazy(() => import("@/components/GamePlaceholder"));
+  const GAME_INFO: Record<string, { emoji: string; title: string; description: string }> = {
+    car: { emoji: "🏎️", title: "Car Racing", description: "Fast and fun car racing is being built! Zoom zoom!" },
+    bike: { emoji: "🏍️", title: "Bike Adventure", description: "An exciting bike adventure is on the way! Vroom vroom!" },
+    makeover: { emoji: "💄", title: "Beauty Salon", description: "A magical makeover salon is being created! Sparkle sparkle!" },
+  };
+  const info = GAME_INFO[gameId ?? ""] ?? { emoji: "🎮", title: "Coming Soon", description: "This game is being built!" };
+  return <Placeholder {...info} />;
+}
 
 // Lazy load route components for better code splitting
 const Landing = lazy(() => import("./pages/Landing.tsx"));
 const AuthPage = lazy(() => import("./pages/Auth.tsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.tsx"));
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
-const AnimalGame = lazy(() => import("./pages/AnimalGame.tsx"));
-const ToddlerGame = lazy(() => import("./pages/ToddlerGame.tsx"));
+const AdventureMap = lazy(() => import("./pages/AdventureMap.tsx"));
+const AnimalGame = lazy(() => import("./pages/games/AnimalGame.tsx"));
+const MemoryGame = lazy(() => import("./pages/games/MemoryGame.tsx"));
+const ABCGame = lazy(() => import("./pages/games/ABCGame.tsx"));
+const MathGame = lazy(() => import("./pages/games/MathGame.tsx"));
+const ShapeGame = lazy(() => import("./pages/games/ShapeGame.tsx"));
+const DrawingGame = lazy(() => import("./pages/games/DrawingGame.tsx"));
+const CookingGame = lazy(() => import("./pages/games/CookingGame.tsx"));
 
 // Simple loading fallback for route transitions
 function RouteLoading() {
@@ -116,30 +135,39 @@ createRoot(document.getElementById("root")!).render(
         <VlyToolbar />
       </ToolbarErrorBoundary>
       <ConvexAuthProvider client={convex}>
-        <BrowserRouter>
-          <RouteSyncer />
-          <Suspense fallback={<RouteLoading />}>
-            <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route
-                path="/auth"
-                element={<AuthPage redirectAfterAuth="/dashboard" />}
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <RequireAuth>
-                    <Dashboard />
-                  </RequireAuth>
-                }
-              />
-              <Route path="/game/animals" element={<AnimalGame />} />
-              <Route path="/game/toddler" element={<ToddlerGame />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-        <Toaster />
+        <GameProvider>
+          <BrowserRouter>
+            <RouteSyncer />
+            <Suspense fallback={<RouteLoading />}>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route
+                  path="/auth"
+                  element={<AuthPage redirectAfterAuth="/dashboard" />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <RequireAuth>
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                />
+                <Route path="/map" element={<AdventureMap />} />
+                <Route path="/game/animals" element={<AnimalGame />} />
+                <Route path="/game/memory" element={<MemoryGame />} />
+                <Route path="/game/abc" element={<ABCGame />} />
+                <Route path="/game/math" element={<MathGame />} />
+                <Route path="/game/shapes" element={<ShapeGame />} />
+                <Route path="/game/drawing" element={<DrawingGame />} />
+                <Route path="/game/cooking" element={<CookingGame />} />
+                <Route path="/game/:gameId" element={<GamePlaceholderRoute />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+          <Toaster />
+        </GameProvider>
       </ConvexAuthProvider>
     </RootErrorBoundary>
   </StrictMode>,
