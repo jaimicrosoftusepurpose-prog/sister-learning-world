@@ -42,40 +42,40 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* CHANGE VALUES FOR THEME */
+/* CUTE MAGICAL CARTOON THEME */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 1.25rem;
+  --background: oklch(0.97 0.015 300);
+  --foreground: oklch(0.3 0.04 300);
+  --card: oklch(0.99 0.01 300);
+  --card-foreground: oklch(0.3 0.04 300);
+  --popover: oklch(0.99 0.01 300);
+  --popover-foreground: oklch(0.3 0.04 300);
+  --primary: oklch(0.72 0.18 340);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.78 0.14 280);
+  --secondary-foreground: oklch(0.99 0 0);
+  --muted: oklch(0.95 0.02 300);
+  --muted-foreground: oklch(0.55 0.04 300);
+  --accent: oklch(0.88 0.14 85);
+  --accent-foreground: oklch(0.3 0.06 85);
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(0.9 0.03 300);
+  --input: oklch(0.92 0.02 300);
+  --ring: oklch(0.72 0.18 340);
+  --chart-1: oklch(0.72 0.18 340);
+  --chart-2: oklch(0.78 0.14 280);
+  --chart-3: oklch(0.85 0.15 150);
+  --chart-4: oklch(0.88 0.14 85);
+  --chart-5: oklch(0.75 0.16 20);
+  --sidebar: oklch(0.96 0.02 300);
+  --sidebar-foreground: oklch(0.3 0.04 300);
+  --sidebar-primary: oklch(0.72 0.18 340);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.95 0.03 300);
+  --sidebar-accent-foreground: oklch(0.3 0.04 300);
+  --sidebar-border: oklch(0.9 0.03 300);
+  --sidebar-ring: oklch(0.72 0.18 340);
 }
 
 .dark {
@@ -112,15 +112,157 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Cute magical game theme styles */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Nunito', 'Comic Neue', 'Segoe UI', system-ui, sans-serif;
   }
   button:not([disabled]),
   [role="button"]:not([disabled]) {
     cursor: pointer;
   }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Float animation for decorative elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(2deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+@keyframes bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 1; }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rainbow-shift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px oklch(0.72 0.18 340 / 0.3); }
+  50% { box-shadow: 0 0 40px oklch(0.72 0.18 340 / 0.6); }
+}
+
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 4s ease-in-out infinite; }
+.animate-sparkle { animation: sparkle 2s ease-in-out infinite; }
+.animate-bounce-in { animation: bounce-in 0.5s ease-out forwards; }
+.animate-wiggle { animation: wiggle 0.5s ease-in-out; }
+.animate-pop { animation: pop 0.4s ease-out forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Cute button hover effects */
+.btn-cute {
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-cute:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+.btn-cute:active {
+  transform: scale(0.97);
+}
+
+/* Confetti particle */
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confetti-fall 2.5s linear forwards;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Star background */
+.stars-bg {
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, oklch(0.88 0.14 85 / 0.6), transparent),
+    radial-gradient(2px 2px at 40px 70px, oklch(0.72 0.18 340 / 0.4), transparent),
+    radial-gradient(2px 2px at 50px 160px, oklch(0.78 0.14 280 / 0.5), transparent),
+    radial-gradient(2px 2px at 90px 40px, oklch(0.85 0.15 150 / 0.4), transparent),
+    radial-gradient(2px 2px at 130px 80px, oklch(0.88 0.14 85 / 0.5), transparent),
+    radial-gradient(2px 2px at 160px 30px, oklch(0.72 0.18 340 / 0.3), transparent);
+  background-size: 200px 200px;
+}
+
+/* Cute card with shadow */
+.card-cute {
+  border: 3px solid oklch(0.9 0.06 340 / 0.3);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 30px oklch(0.72 0.18 340 / 0.12), 0 2px 8px oklch(0 0 0 / 0.04);
+}
+
+/* Gradient backgrounds */
+.bg-magical {
+  background: linear-gradient(135deg, oklch(0.95 0.04 300) 0%, oklch(0.93 0.06 330) 30%, oklch(0.94 0.05 260) 60%, oklch(0.93 0.06 200) 100%);
+}
+
+.bg-rainbow-soft {
+  background: linear-gradient(135deg, 
+    oklch(0.95 0.06 340), 
+    oklch(0.95 0.06 280), 
+    oklch(0.95 0.06 200), 
+    oklch(0.95 0.06 150), 
+    oklch(0.95 0.06 85),
+    oklch(0.95 0.06 340)
+  );
+}
+
+/* Emoji bounce on tap */
+.emoji-tap:active {
+  animation: wiggle 0.3s ease-in-out;
+}
+
+/* Scrollbar styling for kids */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.95 0.02 300);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.82 0.12 340);
+  border-radius: 99px;
 }
