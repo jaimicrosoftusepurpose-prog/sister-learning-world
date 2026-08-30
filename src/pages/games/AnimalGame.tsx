@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import GameLayout from "@/components/GameLayout";
 import Confetti from "@/components/Confetti";
-import { useGame, playCorrect, playWrong, playStar, speak } from "@/contexts/GameContext";
+import { useGame, playCorrect, playWrong, playStar, speak, speakAnimal, playAnimalSound } from "@/contexts/GameContext";
 
 /* ─── Animal Data ─── */
 interface Animal {
@@ -42,7 +42,7 @@ function AnimalCard({ animal, index, soundOn }: { animal: Animal; index: number;
   const [tapped, setTapped] = useState(false);
   const handleTap = () => {
     setTapped(true);
-    if (soundOn) speak(`${animal.name}! ${animal.sound}`);
+    if (soundOn) speakAnimal(animal.id, animal.name, animal.sound);
     setTimeout(() => setTapped(false), 1500);
   };
   return (
@@ -134,7 +134,7 @@ function QuizView({ onComplete, onBack, mode, soundOn }: { onComplete: (s: numbe
       const ns = stars + 1;
       setStars(ns);
       setConfetti(true);
-      if (soundOn) { playCorrect(); speak(`${q.target.name}! ${q.target.sound}`); }
+      if (soundOn) { playCorrect(); speakAnimal(q.target.id, q.target.name, q.target.sound); }
       setFb({ msg: MSGS_CORRECT[Math.floor(Math.random() * MSGS_CORRECT.length)], ok: true });
       setTimeout(() => {
         setConfetti(false); setFb(null); setSelId(null); setHint(false);
@@ -153,7 +153,7 @@ function QuizView({ onComplete, onBack, mode, soundOn }: { onComplete: (s: numbe
   useEffect(() => {
     if (mode === "little" && soundOn) {
       const t = setTimeout(() => {
-        speak(q.isFindSound ? `Find the ${q.target.name}!` : `Which animal says ${q.target.sound}?`, 0.75);
+        speak(q.isFindSound ? `Find the ${q.target.name}!` : `Which animal says ${q.target.sound}?`, 0.7, 1.2);
       }, 300);
       return () => clearTimeout(t);
     }
